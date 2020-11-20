@@ -1,30 +1,39 @@
-combos = list()
-def subsets(combos, arr):
-    index = 0 
-    return find_permutations(combos, arr, 0)
+def subsets(arr):
+    return return_subsets(arr, 0)
 
-
-def find_permutations(combos, arr, index):
-    # base case
+def return_subsets(arr, index):
     if index >= len(arr):
-        combos.append([])
-        return combos
+        return [[]]
+    
+    small_output = return_subsets(arr, index + 1)
+    output = list()
 
-    sub = list()
-    sub.append(arr[index])
-    combos.append(sub)
+    for element in small_output:
+        output.append(element)
+    
+    for element in small_output:
+        current = list()
+        current.append(arr[index])
+        current.extend(element)
+        output.append(current)
+    return output
 
-    available = arr[index + 1:]
-    for digit in available:
-        if [arr[index], digit] not in combos:
-            combos.append([arr[index], digit])
-
-    if arr[index :] not in combos:
-        combos.append(arr[index :])
-    small_output = find_permutations(combos, arr, index + 1)
-    return combos
+def test_function(test_case):
+    arr = test_case[0]
+    solution = test_case[1]
+    
+    output = subsets(arr)
+        
+    output.sort()
+    solution.sort()
+    
+    if output == solution:
+        print("Pass")
+    else:
+        print("Fail")    
 
 arr = [9, 12, 15]
 solution = [[], [15], [12], [12, 15], [9], [9, 15], [9, 12], [9, 12, 15]]
 
-print(sorted(subsets(combos, arr)) == sorted(solution))
+test_case = [arr, solution]
+test_function(test_case)

@@ -5,17 +5,14 @@ def last_index(arr, target):
     return: int - last index of target in arr
     TODO: complete this method to find the last index of target in arr
     """
-    sum = len(arr) + find(-1, arr, target)
-    return sum
+    return last_index_arr(arr, target, len(arr) - 1)
 
-def find(index, array, target):
-    # base case
-    if abs(index) > len(array):
-        return -(len(array) + 1)
-    if array[index] == target:
+def last_index_arr(arr, target, index):
+    if index < 0:
+        return -1
+    if arr[index] == target:
         return index
-    else:
-        return find(index - 1, array, target)
+    return last_index(arr, target, index - 1)
 
 arr = [1, 2, 5, 5, 4]
 target = 7
